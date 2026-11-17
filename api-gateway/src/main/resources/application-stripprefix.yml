@@ -1,0 +1,12 @@
+# Alternative to RewritePath. Activate with: spring.profiles.active=stripprefix
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: account-service-route
+          uri: http://localhost:8081
+          predicates:
+            - Path=/accounts/**
+          filters:
+            - StripPrefix=1                          # /accounts/1001 -> /1001
+            - PrefixPath=/api/v1/internal/accounts   # /1001 -> /api/v1/internal/accounts/1001

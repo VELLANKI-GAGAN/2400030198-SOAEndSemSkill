@@ -1,0 +1,5 @@
+server:
+  port: 8081          # isolated internal port - not exposed to public clients
+spring:
+  application:
+    name: account-service

@@ -1,0 +1,22 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: account-service-route
+          uri: http://localhost:8081
+          predicates:
+            - Path=/accounts/**
+          filters:
+            # /accounts            -> /api/v1/internal/accounts
+            # /accounts/1001       -> /api/v1/internal/accounts/1001
+            - RewritePath=/accounts(?<segment>/?.*), /api/v1/internal/accounts$\{segment}
+
+logging:
+  level:
+    org.springframework.cloud.gateway: INFO
+    com.bank.gateway: INFO
